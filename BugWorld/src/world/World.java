@@ -2,10 +2,10 @@ package world;
 
 import java.util.ArrayList;
 
-import bugs.Bug;
-import bugs.Fly;
-import bugs.Hornet;
-import bugs.Mosquito;
+import bug.Bug;
+import bug.Fly;
+import bug.Hornet;
+import bug.Mosquito;
 import obstacle.Obstacle;
 import plant.Plant;
 
@@ -37,7 +37,7 @@ public class World {
 		grid[height - 1][width - 1] = '*';
 
 		drawBug();
-		// drawPlant();
+		drawPlant();
 		drawObstacle();
 		for (int i = 0; i < height; i++) {
 			for (int x = 0; x < width; x++) {
@@ -63,17 +63,20 @@ public class World {
 			char sym = bugs.get(i).getSym();// get each bugs symbol
 			int posy = bugs.get(i).getPosy();// get each bugs posy ie. height
 			int posx = bugs.get(i).getPosx();// get each bugs posx ie. width
-			if (posy == 0) {
-				posy++;
+			if (posy < 0) {
+				posy = 1;
 				bugs.get(i).setPosy(posy);
-			} else if (posy == height - 1) {
-				posy--;
+			}
+			if (posy > height - 1) {
+				posy = height - 1;
 				bugs.get(i).setPosy(posy);
-			} else if (posx == 0) {
-				posx++;
+			}
+			if (posx < 0) {
+				posx = 1;
 				bugs.get(i).setPosx(posx);
-			} else if (posx == width - 1) {
-				posx--;
+			}
+			if (posx > width - 1) {
+				posx = width - 1;
 				bugs.get(i).setPosx(posx);
 			}
 			grid[posy][posx] = sym; // assign the sym to posy and posx for each
@@ -101,7 +104,7 @@ public class World {
 			}
 		}
 		drawBug();
-		// drawPlant();
+		drawPlant();
 		drawObstacle();
 		for (int i = 0; i < height; i++) {
 			for (int x = 0; x < width; x++) {

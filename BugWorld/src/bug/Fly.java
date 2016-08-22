@@ -1,4 +1,4 @@
-package bugs;
+package bug;
 
 public class Fly extends Bug {
 	public Fly(String name) {

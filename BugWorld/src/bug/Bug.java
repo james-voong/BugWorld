@@ -1,4 +1,4 @@
-package bugs;
+package bug;
 
 public class Bug {
 	protected String name;

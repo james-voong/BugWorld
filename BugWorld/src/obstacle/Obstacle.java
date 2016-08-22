@@ -19,12 +19,15 @@ public class Obstacle {
 	public void checkBorder(int height, int width) {
 		if (posY < 1) {
 			posY = 1;
-		} else if (posY > height - 1) {
+		}
+		if (posY > height - 1) {
 			posY = height - 1;
-		} else if (posX == 0) {
-			posX++;
-		} else if (posX == width - 1) {
-			posX--;
+		}
+		if (posX < 0) {
+			posX = 1;
+		}
+		if (posX > width - 1) {
+			posX = width - 1;
 		}
 
 	}

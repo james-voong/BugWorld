@@ -47,14 +47,17 @@ public class Plant {
 	}
 
 	public void checkPos(int height, int width) {
-		if (posY == 0) {
-			posY++;
-		} else if (posY == height - 1) {
-			posY--;
-		} else if (posX == 0) {
-			posX++;
-		} else if (posX == width - 1) {
-			posX--;
+		if (posY < 0) {
+			posY = 1;
+		}
+		if (posY > height - 1) {
+			posY = height - 1;
+		}
+		if (posX < 0) {
+			posX = 1;
+		}
+		if (posX > width - 1) {
+			posX = width - 1;
 		}
 	}
 
