@@ -17,17 +17,17 @@ public class Obstacle {
 	}
 
 	public void checkBorder(int height, int width) {
-		if (posY < 1) {
+		if (posY <= 1) {
 			posY = 1;
 		}
-		if (posY > height - 1) {
-			posY = height - 1;
+		if (posY >= height - 2) {
+			posY = height - 2;
 		}
-		if (posX < 0) {
+		if (posX <= 0) {
 			posX = 1;
 		}
-		if (posX > width - 1) {
-			posX = width - 1;
+		if (posX >= width - 2) {
+			posX = width - 2;
 		}
 
 	}

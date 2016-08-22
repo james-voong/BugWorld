@@ -1,6 +1,7 @@
 package world;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import bug.Bug;
 import bug.Fly;
@@ -10,14 +11,21 @@ import obstacle.Obstacle;
 import plant.Plant;
 
 public class World {
-	private static int height = 12;
-	private static int width = 30;
-	private static ArrayList<Bug> bugs = new ArrayList<Bug>();
-	private static ArrayList<Plant> plants = new ArrayList<Plant>();
-	private static ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
-	private static char[][] grid = new char[height][width];
+	private int height;
+	private int width;
+	private ArrayList<Bug> bugs = new ArrayList<Bug>();
+	private ArrayList<Plant> plants = new ArrayList<Plant>();
+	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+	private char[][] grid;
+	private Random rand = new Random();
 
-	public static void drawWorld() {
+	public World(int height, int width) {
+		this.height = height;
+		this.width = width;
+		grid = new char[height][width];
+	}
+
+	public void drawWorld() {
 		for (int i = 0; i < height; i++) {
 			for (int x = 0; x < width; x++) {
 				grid[i][x] = ' ';
@@ -48,7 +56,7 @@ public class World {
 
 	}
 
-	public static void drawPlant() {
+	public void drawPlant() {
 		for (int i = 0; i < plants.size(); i++) {
 			int posx = plants.get(i).getPosX();
 			int posy = plants.get(i).getPosY();
@@ -58,25 +66,25 @@ public class World {
 		}
 	}
 
-	public static void drawBug() {
+	public void drawBug() {
 		for (int i = 0; i < bugs.size(); i++) {
 			char sym = bugs.get(i).getSym();// get each bugs symbol
 			int posy = bugs.get(i).getPosy();// get each bugs posy ie. height
 			int posx = bugs.get(i).getPosx();// get each bugs posx ie. width
-			if (posy < 0) {
+			if (posy <= 0) {
 				posy = 1;
 				bugs.get(i).setPosy(posy);
 			}
-			if (posy > height - 1) {
-				posy = height - 1;
+			if (posy >= height - 2) {
+				posy = height - 2;
 				bugs.get(i).setPosy(posy);
 			}
-			if (posx < 0) {
+			if (posx <= 0) {
 				posx = 1;
 				bugs.get(i).setPosx(posx);
 			}
-			if (posx > width - 1) {
-				posx = width - 1;
+			if (posx >= width - 2) {
+				posx = width - 2;
 				bugs.get(i).setPosx(posx);
 			}
 			grid[posy][posx] = sym; // assign the sym to posy and posx for each
@@ -84,7 +92,7 @@ public class World {
 		}
 	}
 
-	public static void drawObstacle() {
+	public void drawObstacle() {
 		for (int i = 0; i < obstacles.size(); i++) {
 			int posx = obstacles.get(i).getPosX();
 			int posy = obstacles.get(i).getPosY();
@@ -94,11 +102,12 @@ public class World {
 
 	}
 
-	public static void updateWorld() {
+	public void updateWorld() {
 		for (int i = 0; i < bugs.size(); i++) {
 			int IniX = bugs.get(i).getPosx();
 			int IniY = bugs.get(i).getPosy();
 			bugs.get(i).moveRandom();
+			obstacleDetect(bugs.get(i));
 			if (IniX != bugs.get(i).getPosx() || IniY != bugs.get(i).getPosy()) {
 				grid[IniY][IniX] = ' ';
 			}
@@ -114,25 +123,45 @@ public class World {
 		}
 	}
 
-	public static void main(String[] args) {
-		Bug bug1 = new Hornet("Mosquito");
-		Bug bug2 = new Mosquito("asd");
-		Bug bug3 = new Fly("zxc");
-		bugs.add(bug1);
-		bugs.add(bug2);
-		bugs.add(bug3);
-		Plant p1 = new Plant(height, width);
-		Plant p2 = new Plant(height, width);
-		Plant p3 = new Plant(height, width);
-		plants.add(p1);
-		plants.add(p2);
-		plants.add(p3);
-		Obstacle O1 = new Obstacle(height, width);
-		Obstacle O2 = new Obstacle(height, width);
-		obstacles.add(O1);
-		obstacles.add(O2);
-		drawWorld();
-		updateWorld();
+	public void fillWorld(int bugNum, int plantNum, int obsNum) {
+		generateBugs(bugNum);
+		generatePlants(plantNum);
+		generateObstacles(obsNum);
+
+	}
+
+	public void generateBugs(int bugNum) {
+		int randomizer = rand.nextInt(120);
+		for (int i = 0; i < bugNum; i++) {
+			if (randomizer <= 40) {
+				Bug bug1 = new Hornet("Mosquito", height, width);
+				bugs.add(bug1);
+			}
+			if (randomizer >= 80) {
+				Bug bug2 = new Mosquito("asd", height, width);
+				bugs.add(bug2);
+			} else {
+				Bug bug3 = new Fly("zxc", height, width);
+				bugs.add(bug3);
+			}
+		}
+	}
+
+	public void generatePlants(int plantNum) {
+		for (int i = 0; i < plantNum; i++) {
+			Plant p1 = new Plant(height, width);
+			plants.add(p1);
+		}
+	}
+
+	public void generateObstacles(int obsNum) {
+		for (int i = 0; i < obsNum; i++) {
+			Obstacle O1 = new Obstacle(height, width);
+			obstacles.add(O1);
+		}
+	}
+
+	public void obstacleDetect(Bug bug) {
 
 	}
 

@@ -15,13 +15,13 @@ public class Bug {
 	 * @param species
 	 * @param sym
 	 */
-	public Bug(String name, String species, char sym) {
+	public Bug(String name, String species, char sym, int height, int width) {
 		this.name = name;
 		this.species = species;
 		this.sym = sym;
 		uid = uidt++;
-		posx = (int) (Math.random() * 30);
-		posy = (int) (Math.random() * 12);
+		posx = (int) (Math.random() * width);
+		posy = (int) (Math.random() * height);
 	}
 
 	/**
@@ -29,13 +29,13 @@ public class Bug {
 	 * @param posx
 	 * @param posy
 	 */
-	public Bug() {
+	public Bug(int height, int width) {
 		name = "Default Name";
 		species = "Default Species";
 		sym = 'a';
 		uid = uidt++;
-		posx = (int) (Math.random() * 30);
-		posy = (int) (Math.random() * 12);
+		posx = (int) (Math.random() * width);
+		posy = (int) (Math.random() * height);
 	}
 
 	public String getName() {
@@ -121,25 +121,25 @@ public class Bug {
 	public void moveRandom() {
 		// int tracker = 0;
 		// System.out.println("Initial X = " + posx + "\nInitial Y = " + posy);
-		while (energy > 0) {
-			double f = Math.random();
-			if (f <= 0.2) {
-				posy--;
-				// System.out.println(name + " moves N");
-			} else if (f > 0.2 && f <= 0.4) {
-				posy++;
-				// System.out.println(name + " moves S");
-			} else if (f > 0.4 && f <= 0.6) {
-				posx--;
-				// System.out.println(name + " moves W");
-			} else if (f > 0.6 && f <= 0.8) {
-				posx++;
-				// System.out.println(name + " moves E");
-			}
-
-			energy--;
-			// tracker++;
+		// while (energy > 0) {
+		double f = Math.random();
+		if (f <= 0.2) {
+			posy--;
+			// System.out.println(name + " moves N");
+		} else if (f > 0.2 && f <= 0.4) {
+			posy++;
+			// System.out.println(name + " moves S");
+		} else if (f > 0.4 && f <= 0.6) {
+			posx--;
+			// System.out.println(name + " moves W");
+		} else if (f > 0.6 && f <= 0.8) {
+			posx++;
+			// System.out.println(name + " moves E");
 		}
+
+		// energy--;
+		// tracker++;
+		// }
 		// System.out.print(tracker);
 		// System.out.println("Final X = " + posx + "\nFinal Y = " + posy);
 	}
