@@ -107,7 +107,7 @@ public class World {
 			int IniX = bugs.get(i).getPosx();
 			int IniY = bugs.get(i).getPosy();
 			bugs.get(i).moveRandom();
-			obstacleDetect(bugs.get(i));
+			obstacleDetect(bugs.get(i), IniX, IniY);
 			if (IniX != bugs.get(i).getPosx() || IniY != bugs.get(i).getPosy()) {
 				grid[IniY][IniX] = ' ';
 			}
@@ -161,8 +161,21 @@ public class World {
 		}
 	}
 
-	public void obstacleDetect(Bug bug) {
-
+	public void obstacleDetect(Bug bug, int IniX, int IniY) {
+		int newX = bug.getPosx();
+		int newY = bug.getPosy();
+		for (int i = 0; i < obstacles.size(); i++) {
+			if (obstacles.get(i).getPosX() == newX && obstacles.get(i).getPosY() == newY) {
+				bug.setPosx(IniX);
+				bug.setPosy(IniY);
+			}
+		}
+		for (int x = 0; x < plants.size(); x++) {
+			if (plants.get(x).getPosX() == newX && plants.get(x).getPosY() == newY) {
+				bug.setPosx(IniX);
+				bug.setPosy(IniY);
+			}
+		}
 	}
 
 }
