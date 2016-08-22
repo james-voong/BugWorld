@@ -174,7 +174,19 @@ public class World {
 			if (plants.get(x).getPosX() == newX && plants.get(x).getPosY() == newY) {
 				bug.setPosx(IniX);
 				bug.setPosy(IniY);
+				eatPlant(plants.get(x), x);
 			}
+		}
+	}
+
+	public void eatPlant(Plant p, int index) {
+		int size = p.getSize();
+		if (size > 0) {
+			size--;
+			p.setSize(size);
+		}
+		if (size == 0) {
+			plants.remove(index);
 		}
 	}
 
