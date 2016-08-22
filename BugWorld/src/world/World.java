@@ -190,4 +190,16 @@ public class World {
 		}
 	}
 
+	public ArrayList<Bug> getBugs() {
+		return bugs;
+	}
+
+	public ArrayList<Plant> getPlants() {
+		return plants;
+	}
+
+	public ArrayList<Obstacle> getObstacles() {
+		return obstacles;
+	}
+
 }
