@@ -59,6 +59,7 @@ public class Animate extends Application {
 		border.setTop(buttons);
 		border.setCenter(grid);
 		setUpButtons();
+		grid.setGridLinesVisible(true);
 	}
 
 	public void setUpButtons() {
@@ -82,8 +83,7 @@ public class Animate extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-
+				generateWorld();
 			}
 		});
 		buttons.getChildren().addAll(play, clear);

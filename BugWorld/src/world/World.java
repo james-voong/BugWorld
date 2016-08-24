@@ -56,16 +56,6 @@ public class World {
 
 	}
 
-	public void drawPlant() {
-		for (int i = 0; i < plants.size(); i++) {
-			int posx = plants.get(i).getPosX();
-			int posy = plants.get(i).getPosY();
-			plants.get(i).growPlant();
-			int size = plants.get(i).getSize();
-			grid[posy][posx] = String.valueOf(size).charAt(0);
-		}
-	}
-
 	public void drawBug() {
 		for (int i = 0; i < bugs.size(); i++) {
 			char sym = bugs.get(i).getSym();// get each bugs symbol
@@ -73,22 +63,32 @@ public class World {
 			int posx = bugs.get(i).getPosx();// get each bugs posX ie. width
 			if (posy <= 0) {
 				posy = 1;
-				bugs.get(i).setPosy(posy);
+				bugs.get(i).setPosY(posy);
 			}
 			if (posy >= height - 2) {
 				posy = height - 2;
-				bugs.get(i).setPosy(posy);
+				bugs.get(i).setPosY(posy);
 			}
 			if (posx <= 0) {
 				posx = 1;
-				bugs.get(i).setPosx(posx);
+				bugs.get(i).setPosX(posx);
 			}
 			if (posx >= width - 2) {
 				posx = width - 2;
-				bugs.get(i).setPosx(posx);
+				bugs.get(i).setPosX(posx);
 			}
-			grid[posy][posx] = sym; // assign the sym to posy and posx for each
+			grid[posy][posx] = sym; // assign the sym to posY and posX for each
 									// bug
+		}
+	}
+
+	public void drawPlant() {
+		for (int i = 0; i < plants.size(); i++) {
+			int posx = plants.get(i).getPosX();
+			int posy = plants.get(i).getPosY();
+			plants.get(i).growPlant();
+			int size = plants.get(i).getSize();
+			grid[posy][posx] = String.valueOf(size).charAt(0);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class World {
 		generateBugs(bugNum);
 		generatePlants(plantNum);
 		generateObstacles(obsNum);
-
+		checkOverlap();
 	}
 
 	public void generateBugs(int bugNum) {
@@ -167,15 +167,15 @@ public class World {
 		int newY = bug.getPosy();
 		for (int i = 0; i < obstacles.size(); i++) {
 			if (obstacles.get(i).getPosX() == newX && obstacles.get(i).getPosY() == newY) {
-				bug.setPosx(IniX);
-				bug.setPosy(IniY);
+				bug.setPosX(IniX);
+				bug.setPosY(IniY);
 			}
 		}
 		int arraySize = plants.size();
 		for (int x = 0; x < arraySize; x++) {
 			if (plants.get(x).getPosX() == newX && plants.get(x).getPosY() == newY) {
-				bug.setPosx(IniX);
-				bug.setPosy(IniY);
+				bug.setPosX(IniX);
+				bug.setPosY(IniY);
 				arraySize = eatPlant(plants.get(x), x, arraySize);
 			}
 		}
@@ -192,6 +192,132 @@ public class World {
 			arraySize--;
 		}
 		return arraySize;
+	}
+
+	public void checkOverlap() {
+		// Cycle through bugs
+		for (int i = 0; i < bugs.size(); i++) {
+			int posX = bugs.get(i).getPosx();
+			int posY = bugs.get(i).getPosy();
+			// Compare bugs with obstacles
+			for (int x = 0; x < obstacles.size(); x++) {
+				if (obstacles.get(x).getPosX() == posX && obstacles.get(x).getPosY() == posY) {
+					int chance = rand.nextInt(90);
+					if (posX > 1) {
+						bugs.get(i).setPosX(posX - 1);
+						if (chance >= 45 && posY > 1) {
+							bugs.get(i).setPosY(posY - 1);
+						} else if (chance >= 45 && posY <= 1) {
+							bugs.get(i).setPosY(posY + 1);
+						}
+					}
+					if (posX <= 1) {
+						bugs.get(i).setPosX(posX + 1);
+						if (chance >= 45 && posY > 1) {
+							bugs.get(i).setPosY(posY - 1);
+						} else if (chance >= 45 && posY <= 1) {
+							bugs.get(i).setPosY(posY + 1);
+						}
+					}
+					if (posY > 1) {
+						bugs.get(i).setPosX(posY - 1);
+						if (chance >= 45 && posX > 1) {
+							bugs.get(i).setPosY(posX - 1);
+						} else if (chance >= 45 && posX <= 1) {
+							bugs.get(i).setPosY(posX + 1);
+						}
+					}
+					if (posY <= 1) {
+						bugs.get(i).setPosX(posY + 1);
+						if (chance >= 45 && posX > 1) {
+							bugs.get(i).setPosY(posX - 1);
+						} else if (chance >= 45 && posX <= 1) {
+							bugs.get(i).setPosY(posX + 1);
+						}
+					}
+				}
+			}
+			// compares bugs with plants
+			for (int y = 0; y < plants.size(); y++) {
+				if (plants.get(y).getPosX() == posX && plants.get(y).getPosY() == posY) {
+					int chance = rand.nextInt(90);
+					if (posX > 1) {
+						bugs.get(i).setPosX(posX - 1);
+						if (chance >= 45 && posY > 1) {
+							bugs.get(i).setPosY(posY - 1);
+						} else if (chance >= 45 && posY <= 1) {
+							bugs.get(i).setPosY(posY + 1);
+						}
+					}
+					if (posX <= 1) {
+						bugs.get(i).setPosX(posX + 1);
+						if (chance >= 45 && posY > 1) {
+							bugs.get(i).setPosY(posY - 1);
+						} else if (chance >= 45 && posY <= 1) {
+							bugs.get(i).setPosY(posY + 1);
+						}
+					}
+					if (posY > 1) {
+						bugs.get(i).setPosX(posY - 1);
+						if (chance >= 45 && posX > 1) {
+							bugs.get(i).setPosY(posX - 1);
+						} else if (chance >= 45 && posX <= 1) {
+							bugs.get(i).setPosY(posX + 1);
+						}
+					}
+					if (posY <= 1) {
+						bugs.get(i).setPosX(posY + 1);
+						if (chance >= 45 && posX > 1) {
+							bugs.get(i).setPosY(posX - 1);
+						} else if (chance >= 45 && posX <= 1) {
+							bugs.get(i).setPosY(posX + 1);
+						}
+					}
+				}
+			}
+		}
+		// compares plants with obstacles
+		for (int q = 0; q < plants.size(); q++) {
+			int posX = plants.get(q).getPosX();
+			int posY = plants.get(q).getPosY();
+			for (int w = 0; w < obstacles.size(); w++) {
+				if (plants.get(w).getPosX() == posX && plants.get(w).getPosY() == posY) {
+					int chance = rand.nextInt(90);
+					if (posX > 1) {
+						plants.get(q).setPosX(posX - 1);
+						if (chance >= 45 && posY > 1) {
+							plants.get(q).setPosY(posY - 1);
+						} else if (chance >= 45 && posY <= 1) {
+							plants.get(q).setPosY(posY + 1);
+						}
+					}
+					if (posX <= 1) {
+						plants.get(q).setPosX(posX + 1);
+						if (chance >= 45 && posY > 1) {
+							plants.get(q).setPosY(posY - 1);
+						} else if (chance >= 45 && posY <= 1) {
+							plants.get(q).setPosY(posY + 1);
+						}
+					}
+					if (posY > 1) {
+						plants.get(q).setPosX(posY - 1);
+						if (chance >= 45 && posX > 1) {
+							plants.get(q).setPosY(posX - 1);
+						} else if (chance >= 45 && posX <= 1) {
+							plants.get(q).setPosY(posX + 1);
+						}
+					}
+					if (posY <= 1) {
+						plants.get(q).setPosX(posY + 1);
+						if (chance >= 45 && posX > 1) {
+							plants.get(q).setPosY(posX - 1);
+						} else if (chance >= 45 && posX <= 1) {
+							plants.get(q).setPosY(posX + 1);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public ArrayList<Bug> getBugs() {

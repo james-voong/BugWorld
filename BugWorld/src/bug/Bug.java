@@ -13,8 +13,8 @@ public class Bug extends Circle {
 	private static int uidt = 0;
 	protected int uid;
 	protected int energy = 1;
-	protected int posx;
-	protected int posy;
+	protected int posX;
+	protected int posY;
 	Random rand = new Random();
 
 	/**
@@ -32,23 +32,23 @@ public class Bug extends Circle {
 		this.species = species;
 		this.sym = sym;
 		uid = uidt++;
-		posx = (int) (Math.random() * width);
-		posy = (int) (Math.random() * height);
+		posX = (int) (Math.random() * width);
+		posY = (int) (Math.random() * height);
 		setRadius(rand.nextInt(10)+5);
 	}
 
 	/**
 	 * @param energy
-	 * @param posx
-	 * @param posy
+	 * @param posX
+	 * @param posY
 	 */
 	public Bug(int height, int width) {
 		name = "Default Name";
 		species = "Default Species";
 		sym = 'a';
 		uid = uidt++;
-		posx = (int) (Math.random() * width);
-		posy = (int) (Math.random() * height);
+		posX = (int) (Math.random() * width);
+		posY = (int) (Math.random() * height);
 	}
 
 	public String getName() {
@@ -80,19 +80,19 @@ public class Bug extends Circle {
 	}
 
 	public int getPosx() {
-		return posx;
+		return posX;
 	}
 
-	public void setPosx(int posx) {
-		this.posx = posx;
+	public void setPosX(int posx) {
+		this.posX = posx;
 	}
 
-	public void setPosy(int posy) {
-		this.posy = posy;
+	public void setPosY(int posy) {
+		this.posY = posy;
 	}
 
 	public int getPosy() {
-		return posy;
+		return posY;
 	}
 
 	public String toString() {
@@ -106,29 +106,29 @@ public class Bug extends Circle {
 
 	public void move(char a) {
 		char b = Character.toUpperCase(a);
-		System.out.println("X = " + posx + "\nY = " + posy);
+		System.out.println("X = " + posX + "\nY = " + posY);
 		if (b == 'N' && energy > 0) {
 			while (energy > 0) {
-				posy = posy - 1;
+				posY = posY - 1;
 				energy--;
 			}
 		} else if (b == 'S' && energy > 0) {
 			while (energy > 0) {
-				posy = posy + 1;
+				posY = posY + 1;
 				energy--;
 			}
 		} else if (b == 'W' && energy > 0) {
 			while (energy > 0) {
-				posx = posx - 1;
+				posX = posX - 1;
 				energy--;
 			}
 		} else if (b == 'E' && energy > 0) {
 			while (energy > 0) {
-				posx = posx + 1;
+				posX = posX + 1;
 				energy--;
 			}
 		}
-		System.out.println("X = " + posx + "\nY = " + posy);
+		System.out.println("X = " + posX + "\nY = " + posY);
 	}
 
 	public void moveRandom() {
@@ -137,16 +137,16 @@ public class Bug extends Circle {
 		// while (energy > 0) {
 		double f = Math.random();
 		if (f <= 0.2) {
-			posy--;
+			posY--;
 			// System.out.println(name + " moves N");
 		} else if (f > 0.2 && f <= 0.4) {
-			posy++;
+			posY++;
 			// System.out.println(name + " moves S");
 		} else if (f > 0.4 && f <= 0.6) {
-			posx--;
+			posX--;
 			// System.out.println(name + " moves W");
 		} else if (f > 0.6 && f <= 0.8) {
-			posx++;
+			posX++;
 			// System.out.println(name + " moves E");
 		}
 
