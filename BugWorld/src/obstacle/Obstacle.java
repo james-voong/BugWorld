@@ -1,6 +1,9 @@
 package obstacle;
 
-public class Obstacle {
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+public class Obstacle extends Rectangle {
 	private int posY;
 	private int posX;
 	private char obstacle;
@@ -10,6 +13,8 @@ public class Obstacle {
 	 * @param posX
 	 */
 	public Obstacle(int height, int width) {
+		super(20, 20);
+		setFill(Color.CYAN);
 		this.posY = (int) (Math.random() * height);
 		this.posX = (int) (Math.random() * width);
 		obstacle = '@';

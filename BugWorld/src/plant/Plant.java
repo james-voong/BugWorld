@@ -1,6 +1,9 @@
 package plant;
 
-public class Plant {
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
+public class Plant extends Circle {
 	private int size;
 	private int posX;
 	private int posY;
@@ -8,11 +11,13 @@ public class Plant {
 	/**
 	 * @param size
 	 */
-	public Plant(int height, int width) {
+	public Plant(int worldHeight, int worldWidth) {
+		super(0, Color.GREEN);
 		size = (int) (Math.random() * 9);
-		posX = (int) (Math.random() * width);
-		posY = (int) (Math.random() * height);
-		checkPos(height, width);
+		posX = (int) (Math.random() * worldWidth);
+		posY = (int) (Math.random() * worldHeight);
+		checkPos(worldHeight, worldWidth);
+		setRadius(2 * size + 1);
 	}
 
 	public int getPosX() {
@@ -43,6 +48,7 @@ public class Plant {
 		double roll = Math.random() * 100;
 		if (roll <= 35 && size < 9) {
 			size++;
+			setRadius(2 * size + 1);
 		}
 	}
 

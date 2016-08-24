@@ -1,6 +1,12 @@
 package bug;
 
-public class Bug {
+import java.util.Random;
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+
+public class Bug extends Circle {
 	protected String name;
 	private String species;
 	private char sym;
@@ -9,19 +15,26 @@ public class Bug {
 	protected int energy = 1;
 	protected int posx;
 	protected int posy;
+	Random rand = new Random();
 
 	/**
 	 * @param name
 	 * @param species
 	 * @param sym
 	 */
-	public Bug(String name, String species, char sym, int height, int width) {
+	public Bug(String name, String species, char sym, int height, int width, Color col) {
+		super(10, col);
+		Text text = new Text(Character.toString(sym));
+		double W = text.getBoundsInLocal().getWidth();
+		double H = text.getBoundsInLocal().getHeight();
+		text.relocate(20 - W / 2, 20 - H / 2);
 		this.name = name;
 		this.species = species;
 		this.sym = sym;
 		uid = uidt++;
 		posx = (int) (Math.random() * width);
 		posy = (int) (Math.random() * height);
+		setRadius(rand.nextInt(10)+5);
 	}
 
 	/**

@@ -69,8 +69,8 @@ public class World {
 	public void drawBug() {
 		for (int i = 0; i < bugs.size(); i++) {
 			char sym = bugs.get(i).getSym();// get each bugs symbol
-			int posy = bugs.get(i).getPosy();// get each bugs posy ie. height
-			int posx = bugs.get(i).getPosx();// get each bugs posx ie. width
+			int posy = bugs.get(i).getPosy();// get each bugs posY ie. height
+			int posx = bugs.get(i).getPosx();// get each bugs posX ie. width
 			if (posy <= 0) {
 				posy = 1;
 				bugs.get(i).setPosy(posy);
@@ -131,16 +131,17 @@ public class World {
 	}
 
 	public void generateBugs(int bugNum) {
-		int randomizer = rand.nextInt(120);
 		for (int i = 0; i < bugNum; i++) {
+			int randomizer = rand.nextInt(120);
 			if (randomizer <= 40) {
 				Bug bug1 = new Hornet("Mosquito", height, width);
 				bugs.add(bug1);
-			}
-			if (randomizer >= 80) {
+
+			} else if (randomizer >= 80) {
 				Bug bug2 = new Mosquito("asd", height, width);
 				bugs.add(bug2);
-			} else {
+
+			} else if (randomizer > 40 && randomizer < 80) {
 				Bug bug3 = new Fly("zxc", height, width);
 				bugs.add(bug3);
 			}
@@ -170,24 +171,27 @@ public class World {
 				bug.setPosy(IniY);
 			}
 		}
-		for (int x = 0; x < plants.size(); x++) {
+		int arraySize = plants.size();
+		for (int x = 0; x < arraySize; x++) {
 			if (plants.get(x).getPosX() == newX && plants.get(x).getPosY() == newY) {
 				bug.setPosx(IniX);
 				bug.setPosy(IniY);
-				eatPlant(plants.get(x), x);
+				arraySize = eatPlant(plants.get(x), x, arraySize);
 			}
 		}
 	}
 
-	public void eatPlant(Plant p, int index) {
+	public int eatPlant(Plant p, int index, int arraySize) {
 		int size = p.getSize();
 		if (size > 0) {
 			size--;
 			p.setSize(size);
 		}
-		if (size == 0) {
+		if (size <= 0) {
 			plants.remove(index);
+			arraySize--;
 		}
+		return arraySize;
 	}
 
 	public ArrayList<Bug> getBugs() {
